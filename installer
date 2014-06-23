@@ -1,0 +1,10 @@
+#!/bin/sh
+if mountpoint -q /target; then
+	echo "Installing nsenter to /target"
+	cp /nsenter /target
+else
+	echo "/target is not a mountpoint."
+	echo "You can either:"
+	echo "- re-run this container with -v /usr/local/bin:/target"
+	echo "- extract the nsenter binary (located at /nsenter)"
+fi
