@@ -2,6 +2,8 @@
 if mountpoint -q /target; then
 	echo "Installing nsenter to /target"
 	cp /nsenter /target
+	echo "Installing docker-enter to /target"
+	cp /docker-enter /target
 else
 	echo "/target is not a mountpoint."
 	echo "You can either:"
