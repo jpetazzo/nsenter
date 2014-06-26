@@ -11,5 +11,6 @@ WORKDIR /src/util-linux
 RUN ./configure --without-ncurses
 RUN make nsenter
 RUN cp nsenter /
+ADD docker-enter /docker-enter
 ADD installer /installer
 CMD /installer
