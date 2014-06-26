@@ -1,5 +1,9 @@
 #!/bin/sh
 
-PID=$(docker inspect --format {{.State.Pid}} "$1")
-shift
-nsenter --target $PID --mount --uts --ipc --net --pid "$@"
+if [ -z "$@" ]; then
+    echo "usage: docker-enter <container id/name> <command to run default:sh>"
+else
+    PID=$(docker inspect --format {{.State.Pid}} "$1")
+    shift
+    nsenter --target $PID --mount --uts --ipc --net --pid -- "$@"
+fi

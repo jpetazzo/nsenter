@@ -55,8 +55,16 @@ Then enter the container:
 
     nsenter --target $PID --mount --uts --ipc --net --pid
 
-Combining those two steps into a single command is left as an exercise for
-the reader.
+
+## What's that docker-enter thing?
+
+It's just a small shell script that wraps up the steps described above into
+a tiny helper. It takes the name or ID of a container and optionally the name
+of a program to execute inside the namespace. If no command is specified a
+shell will be invoked instead.
+
+    # list the root filesystem
+    docker-enter my_awesome_container ls -la
 
 
 ## Caveats
