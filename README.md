@@ -55,8 +55,6 @@ Then enter the container:
 
     nsenter --target $PID --mount --uts --ipc --net --pid
 
-Combining those two steps into a single command is left as an exercise for
-the reader.
 
 ## What's that docker-enter thing?
 
