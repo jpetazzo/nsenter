@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -z "$@" ]; then
+if [ -z "$1" ]; then
     echo "usage: docker-enter <container id/name> <command to run default:sh>"
 else
     PID=$(docker inspect --format {{.State.Pid}} "$1")
