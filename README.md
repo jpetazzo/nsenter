@@ -66,10 +66,22 @@ shell will be invoked instead.
     # list the root filesystem
     docker-enter my_awesome_container ls -la
 
-If you are using boot2docker, you could check this blog post about
-[Debugging a Docker container] by [Nicolas De Loof], showing how
-to use `nsenter` with boot2docker.
+## docker-enter with boot2docker
 
+If you are using boot2docker, you can use the function below, to:
+
+- install `nsenter` and `docker-enter` into boot2docker's /var/lib/boot2docker/ directory,
+  so they survive restarts.
+- execute `docker-enter` inside of boot2docker combined with ssh
+
+```
+docker-enter() {
+  boot2docker ssh '[ -f /var/lib/boot2docker/nsenter ] || (docker run --rm -v /var/lib/boot2docker/:/target jpetazzo/nsenter ; sudo curl -Lo /var/lib/boot2docker/docker-enter https://raw.githubusercontent.com/jpetazzo/nsenter/master/docker-enter )'
+  boot2docker ssh -t sudo /var/lib/boot2docker/docker-enter "$@"
+}
+```
+
+You can use it directly from your host (OS X/Windows), no need to ssh into boot2docker.
 
 ## Caveats
 
