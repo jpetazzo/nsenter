@@ -20,7 +20,7 @@ excited about it is because it lets you [enter into a Docker container].
 This is because my preferred distros (Debian and Ubuntu) ship with an
 outdated version of `util-linux` (the package that should contain `nsenter`).
 Therefore, if you need `nsenter` on those distros, you have to juggle with
-APT repository, or compile from source, or… Nobody ain't got time for that.
+APT repository, or compile from source, or… Ain't nobody got time for that.
 
 I'm going to make a very bold assumption: if you landed here, it's because
 you want to enter a Docker container. Therefore, you won't mind if my
