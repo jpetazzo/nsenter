@@ -31,7 +31,7 @@ method to build `nsenter` uses Docker itself.
 
 If you want to install `nsenter` into `/usr/local/bin`, just do this:
 
-    docker run -v /usr/local/bin:/target jpetazzo/nsenter
+    docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 
 The `jpetazzo/nsenter` container will detect that `/target` is a
 mountpoint, and it will copy the `nsenter` binary into it.
@@ -40,7 +40,7 @@ If you don't trust me, and prefer to extract the `nsenter` binary,
 rather than allowing my container to potentially wreak havoc into
 your system's `$PATH`, you can also do this:
 
-    docker run jpetazzo/nsenter cat /nsenter > /tmp/nsenter
+    docker run --rm jpetazzo/nsenter cat /nsenter > /tmp/nsenter
 
 Then do whatever you want with the binary in `/tmp/nsenter`.
 
