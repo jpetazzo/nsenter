@@ -4,6 +4,9 @@ if [ -z "$1" ]; then
     echo "usage: docker-enter <container id/name> <command to run default:sh>"
 else
     PID=$(docker inspect --format {{.State.Pid}} "$1")
+    if [ -z "$PID" ]; then
+        exit 1
+    fi
     shift
     nsenter --target $PID --mount --uts --ipc --net --pid -- "$@"
 fi
