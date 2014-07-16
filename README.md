@@ -76,7 +76,7 @@ If you are using boot2docker, you can use the function below, to:
 
 ```
 docker-enter() {
-  boot2docker ssh '[ -f /var/lib/boot2docker/nsenter ] || (docker run --rm -v /var/lib/boot2docker/:/target jpetazzo/nsenter ; sudo curl -Lo /var/lib/boot2docker/docker-enter https://raw.githubusercontent.com/jpetazzo/nsenter/master/docker-enter )'
+  boot2docker ssh '[ -f /var/lib/boot2docker/nsenter ] || docker run --rm -v /var/lib/boot2docker/:/target jpetazzo/nsenter'
   boot2docker ssh -t sudo /var/lib/boot2docker/docker-enter "$@"
 }
 ```
@@ -97,4 +97,3 @@ You can use it directly from your host (OS X/Windows), no need to ssh into boot2
 [enter into a Docker container]: http://jpetazzo.github.io/2014/03/23/lxc-attach-nsinit-nsenter-docker-0-9/
 [Debugging a Docker container]: http://blog.loof.fr/2014/06/debugging-docker-container.html
 [Nicolas De Loof]: https://twitter.com/ndeloof
-
