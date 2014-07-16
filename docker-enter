@@ -1,5 +1,7 @@
 #!/bin/sh
 
+NSENTER=$(dirname "$0")/nsenter
+
 if [ -z "$1" ]; then
     echo "usage: docker-enter <container id/name> <command to run default:sh>"
 else
@@ -8,5 +10,5 @@ else
         exit 1
     fi
     shift
-    nsenter --target $PID --mount --uts --ipc --net --pid -- "$@"
+    "$NSENTER" --target $PID --mount --uts --ipc --net --pid -- "$@"
 fi
