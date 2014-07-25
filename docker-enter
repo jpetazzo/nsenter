@@ -11,15 +11,15 @@ else
     fi
     shift
 
-    if [ "$#" -eq 0 ]; then
-        if "$NSENTER" --target $PID --mount --uts --ipc --net --pid -- which bash > /dev/null; then
-            COMMAND="bash --login"
+    OPTS="--target $PID --mount --uts --ipc --net --pid -- env --ignore-environment"
+
+    if [ -z "$1" ]; then
+        if "$NSENTER" $OPTS sh -c "type bash" > /dev/null; then
+            "$NSENTER" $OPTS bash -c "exec -cl bash"
         else
-            COMMAND="sh"
+            "$NSENTER" $OPTS HOME=/root sh
         fi
     else
-       COMMAND="$@"
+       "$NSENTER" $OPTS "$@"
     fi
-
-    "$NSENTER" --target $PID --mount --uts --ipc --net --pid -- env --ignore-environment $COMMAND
 fi
