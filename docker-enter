@@ -11,15 +11,14 @@ else
     fi
     shift
 
-    OPTS="--target $PID --mount --uts --ipc --net --pid -- env --ignore-environment"
+    OPTS="--target $PID --mount --uts --ipc --net --pid -- env --ignore-environment --"
 
     if [ -z "$1" ]; then
-        if "$NSENTER" $OPTS sh -c "type bash" > /dev/null; then
-            "$NSENTER" $OPTS bash -c "exec -cl bash"
-        else
-            "$NSENTER" $OPTS HOME=/root sh
-        fi
+        # No command given. Use su to log in to the 
+        # containers default shell and set up the environment, 
+        # including $HOME, $PATH etc.
+        "$NSENTER" $OPTS su - root
     else
-       "$NSENTER" $OPTS "$@"
+        "$NSENTER" $OPTS "$@"
     fi
 fi
