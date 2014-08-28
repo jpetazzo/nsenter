@@ -9,7 +9,7 @@ RUN curl https://www.kernel.org/pub/linux/utils/util-linux/v$VERSION/util-linux-
  && ln -s util-linux-$VERSION util-linux
 WORKDIR /src/util-linux
 RUN ./configure --without-ncurses \
- && make LDFLAGS=-all-static nsenter
+ && make LDFLAGS=-all-static nsenter \
  && cp nsenter /
 ADD docker-enter /docker-enter
 ADD docker-run /docker-run
