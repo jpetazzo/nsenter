@@ -1,4 +1,11 @@
 #!/bin/sh
+###############
+# Author: Frank Lemanschik <frank@dspeed.eu>
+# Licence: Apache
+#
+# Usage: docker-run-in CONTAINERID /path/to/shell-script.sh 
+# Result: will run /path/to/shell-script.sh located on Host inside a running docker Container.
+# #############
 
 if [ -z "$1" ] || [ -z "$2" ]; then
   echo "Usage: docker-run CONTAINER SCRIPT [ARG]..."
