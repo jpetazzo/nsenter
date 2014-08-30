@@ -2,6 +2,8 @@
 ###############
 # Author: Frank Lemanschik <frank@dspeed.eu>
 # Licence: Apache
+# Src-Package: http://github.com/dockerimages/docker-tools
+# Version: 0.3
 #
 # Usage: docker-run-in CONTAINERID /path/to/shell-script.sh 
 # Result: will run /path/to/shell-script.sh located on Host inside a running docker Container.
