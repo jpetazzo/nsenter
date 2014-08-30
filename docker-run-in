@@ -1,0 +1,33 @@
+#!/bin/sh
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+  echo "Usage: docker-run CONTAINER SCRIPT [ARG]..."
+  echo ""
+  echo "Enters the Docker CONTAINER and executes the specified shell script"
+else
+  CONTAINERID=$(docker inspect --format "{{.Id}}" "$1")
+  
+  if [ -z $CONTAINERID ]; then
+    echo "Container not found"
+    exit 1
+  fi
+ 
+ STORAGE_DRIVER=$(docker info | grep Storage | awk '{print $3}')
+ typeset -A CONTAINERFS
+ CONTAINERFS=(             # Compound assignment
+    [aufs]='/var/lib/docker/aufs/mnt/$CONTAINERID/'
+    [devicemapper]='/var/lib/docker/devicemapper/mnt/$CONTAINERID/rootfs/'
+  )
+ 
+  if [[ ${CONTAINERFS[$STORAGE_DRIVER]} ]]; then
+    cp $2 ${CONTAINERFS[$STORAGE_DRIVER]}
+    chmod +x ${CONTAINERFS[$STORAGE_DRIVER]}/$2
+    docker-enter $1 $2
+    rm ${CONTAINERFS[$STORAGE_DRIVER]}/$2  
+  else
+    echo "Your Storage Driver: $STORAGE_DRIVER - isn't supported"
+    exit 1
+  fi
+  
+  
+fi
