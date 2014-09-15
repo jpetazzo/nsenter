@@ -26,7 +26,7 @@ else
         # Use su to clear all host environment variables except for TERM,
         # initialize the environment variables HOME, SHELL, USER, LOGNAME, PATH,
         # and start a login shell.
-        "$NSENTER" $OPTS su - root
+        "$NSENTER" $OPTS /bin/su - root
     else
         # Use env to clear all host environment variables.
         "$NSENTER" $OPTS env --ignore-environment -- "$@"
