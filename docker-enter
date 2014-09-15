@@ -21,14 +21,18 @@ else
 
     OPTS="--target $PID --mount --uts --ipc --net --pid --"
 
+    if [ "$(id -u)" -ne "0" ]; then
+        LAZY_SUDO="sudo "
+    fi
+
     if [ -z "$1" ]; then
         # No command given.
         # Use su to clear all host environment variables except for TERM,
         # initialize the environment variables HOME, SHELL, USER, LOGNAME, PATH,
         # and start a login shell.
-        "$NSENTER" $OPTS su - root
+        $LAZY_SUDO "$NSENTER" $OPTS su - root
     else
         # Use env to clear all host environment variables.
-        "$NSENTER" $OPTS env --ignore-environment -- "$@"
+        $LAZY_SUDO "$NSENTER" $OPTS env --ignore-environment -- "$@"
     fi
 fi
