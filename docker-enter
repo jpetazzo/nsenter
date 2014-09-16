@@ -14,7 +14,8 @@ if [ -z "$1" ]; then
     echo "If COMMAND is not specified, runs an interactive shell in CONTAINER."
 else
     PID=$(docker inspect --format "{{.State.Pid}}" "$1")
-    if [ -z "$PID" ]; then
+    if [ -z "$PID" ] || [ 0 -eq $PID ]; then
+        echo "Container $1 not running"
         exit 1
     fi
     shift
