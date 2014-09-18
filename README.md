@@ -40,7 +40,7 @@ If you don't trust me, and prefer to extract the `nsenter` binary,
 rather than allowing my container to potentially wreak havoc into
 your system's `$PATH`, you can also do this:
 
-    docker run --rm jpetazzo/nsenter cat /nsenter > /tmp/nsenter
+    docker run --rm jpetazzo/nsenter cat /nsenter > /tmp/nsenter && chmod +x /tmp/nsenter
 
 Then do whatever you want with the binary in `/tmp/nsenter`.
 
