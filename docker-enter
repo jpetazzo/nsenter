@@ -22,7 +22,12 @@ else
     OPTS="--target $PID --mount --uts --ipc --net --pid --"
 
     if [ "$(id -u)" -ne "0" ]; then
-        LAZY_SUDO="sudo "
+        which sudo > /dev/null
+        if [ "$?" -eq "0" ]; then
+          LAZY_SUDO="sudo "
+        else
+          echo "Warning: Cannot find sudo; Invoking nsenter as the user $USER." >&2
+        fi
     fi
 
     if [ -z "$1" ]; then
