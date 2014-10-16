@@ -16,7 +16,6 @@ else
     PID=$(docker inspect --format "{{.State.Pid}}" "$1")
     [ -z "$PID" ] && exit 1
     shift
-    COMMAND="$@"
 
     if [ "$(id -u)" -ne "0" ]; then
         which sudo > /dev/null
@@ -32,11 +31,13 @@ else
     
     # If no command is given, default to `su` which executes the default login shell
     # Otherwise, execute the given command
-    [ -z "$COMMAND" ] && COMMAND="su -m root"
     
     # Prepare nsenter flags
     OPTS="--target $PID --mount --uts --ipc --net --pid --"
-
     # Use env to clear all host environment variables and set then anew
-    $LAZY_SUDO "$NSENTER" $OPTS env -i - $ENV $COMMAND
+    if [ $# -lt 1 ]; then
+        $LAZY_SUDO "$NSENTER" $OPTS env -i - $ENV su -m root
+    else
+        $LAZY_SUDO "$NSENTER" $OPTS env -i - $ENV "$@"
+    fi
 fi
