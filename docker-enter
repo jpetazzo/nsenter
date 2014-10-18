@@ -28,7 +28,7 @@ else
     fi
     
     # Get environment variables from the container's root process
-    ENV=$(sudo cat /proc/$PID/environ | xargs -0)
+    ENV=$($LAZY_SUDO cat /proc/$PID/environ | xargs -0)
     
     # If no command is given, default to `su` which executes the default login shell
     # Otherwise, execute the given command
