@@ -35,7 +35,7 @@ else
     [ -z "$COMMAND" ] && COMMAND="su -m root"
     
     # Prepare nsenter flags
-    OPTS="--target $PID --mount --uts --ipc --net --pid --"
+    OPTS="--target $PID --mount --uts --ipc --net --pid --wd --"
 
     # Use env to clear all host environment variables and set then anew
     $LAZY_SUDO "$NSENTER" $OPTS env -i - $ENV $COMMAND
