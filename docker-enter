@@ -26,14 +26,14 @@ else
           echo "Warning: Cannot find sudo; Invoking nsenter as the user $USER." >&2
         fi
     fi
-    
+
     # Get environment variables from the container's root process
     ENV=$($LAZY_SUDO cat /proc/$PID/environ | xargs -0)
-    
+
     # If no command is given, default to `su` which executes the default login shell
     # Otherwise, execute the given command
     [ -z "$COMMAND" ] && COMMAND="su -m root"
-    
+
     # Prepare nsenter flags
     OPTS="--target $PID --mount --uts --ipc --net --pid --wd --"
 
