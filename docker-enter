@@ -27,17 +27,19 @@ else
     fi
     
     # Get environment variables from the container's root process
+
     ENV=$($LAZY_SUDO cat /proc/$PID/environ | xargs -0)
-    
-    # If no command is given, default to `su` which executes the default login shell
-    # Otherwise, execute the given command
-    
+
     # Prepare nsenter flags
     OPTS="--target $PID --mount --uts --ipc --net --pid --"
-    # Use env to clear all host environment variables and set then anew
+
+    # env is to clear all host environment variables and set then anew
     if [ $# -lt 1 ]; then
+	# No arguments, default to `su` which executes the default login shell
         $LAZY_SUDO "$NSENTER" $OPTS env -i - $ENV su -m root
     else
+        # Has command
+        # "$@" is magic in bash, and needs to be in the invocation
         $LAZY_SUDO "$NSENTER" $OPTS env -i - $ENV "$@"
     fi
 fi
