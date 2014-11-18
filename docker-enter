@@ -28,7 +28,7 @@ else
     
     # Get environment variables from the container's root process
 
-    ENV=$($LAZY_SUDO cat /proc/$PID/environ | xargs -0)
+    ENV=$($LAZY_SUDO cat /proc/$PID/environ | xargs -0 | grep =)
 
     # Prepare nsenter flags
     OPTS="--target $PID --mount --uts --ipc --net --pid --"
