@@ -6,7 +6,7 @@ system.
 
 ## What is `nsenter`?
 
-It is a small tool allowing to `enter` into `n`ame`s`paces. Technically,
+It is a small tool allowing to `enter` into `namespaces`. Technically,
 it can enter existing namespaces, or spawn a process into a new set of
 namespaces. "What are those namespaces you're blabbering about?"
 We are talking about [container namespaces].
