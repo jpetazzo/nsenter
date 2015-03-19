@@ -1,3 +1,11 @@
+# Looking to start a shell inside a Docker container?
+
+Starting from Docker 1.3 you can use [Docker exec](https://docs.docker.com/reference/commandline/cli/#exec) to enter a Docker container. Example:
+
+    docker exec -it CONTAINER_NAME /bin/bash
+
+There are differences between nsenter and docker exec; namely, nsenter doesn't enter the cgroups, and therefore evades resource limitations. The potential benefit of this would be debugging and external audit, but  for remote access, **docker exec is the current reccomended approach**.
+
 # nsenter in a can
 
 This is a small Docker recipe to build `nsenter` easily and install it in your
