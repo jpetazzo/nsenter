@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -e $(dirname "$0")/nsenter ]; then
     # with boot2docker, nsenter is not in the PATH but it is in the same folder
@@ -25,21 +25,23 @@ else
           echo "Warning: Cannot find sudo; Invoking nsenter as the user $USER." >&2
         fi
     fi
-    
-    # Get environment variables from the container's root process
 
-    ENV=$($LAZY_SUDO cat /proc/$PID/environ | xargs -0 | grep =)
+    # Get environment variables from the container's root process
+    ENV_VARS=()
+    while IFS= read -d '' var; do
+        ENV_VARS+=("$var")
+    done < <($LAZY_SUDO cat /proc/$PID/environ)
 
     # Prepare nsenter flags
     OPTS="--target $PID --mount --uts --ipc --net --pid --"
 
     # env is to clear all host environment variables and set then anew
     if [ $# -lt 1 ]; then
-	# No arguments, default to `su` which executes the default login shell
-        $LAZY_SUDO "$NSENTER" $OPTS env -i - $ENV su -m root
+	    # No arguments, default to `su` which executes the default login shell
+        $LAZY_SUDO "$NSENTER" $OPTS env -i - "${ENV_VARS[@]}" su -m root
     else
         # Has command
         # "$@" is magic in bash, and needs to be in the invocation
-        $LAZY_SUDO "$NSENTER" $OPTS env -i - $ENV "$@"
+        $LAZY_SUDO "$NSENTER" $OPTS env -i - "${ENV_VARS[@]}" "$@"
     fi
 fi
