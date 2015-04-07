@@ -14,3 +14,8 @@ RUN cp nsenter /
 ADD docker-enter /docker-enter
 ADD installer /installer
 CMD /installer
+# Now build the importenv helper
+WORKDIR /src
+ADD importenv.c /src/importenv.c
+RUN make LDFLAGS=-static CFLAGS=-Wall importenv
+RUN cp importenv /
