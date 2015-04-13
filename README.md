@@ -4,7 +4,7 @@ Starting from Docker 1.3 you can use [Docker exec](https://docs.docker.com/refer
 
     docker exec -it CONTAINER_NAME /bin/bash
 
-There are differences between nsenter and docker exec; namely, nsenter doesn't enter the cgroups, and therefore evades resource limitations. The potential benefit of this would be debugging and external audit, but  for remote access, **docker exec is the current reccomended approach**.
+There are differences between nsenter and docker exec; namely, nsenter doesn't enter the cgroups, and therefore evades resource limitations. The potential benefit of this would be debugging and external audit, but  for remote access, **docker exec is the current recommended approach**.
 
 # nsenter in a can
 
