@@ -18,14 +18,14 @@ else
     shift
 
     if [ "$(id -u)" -ne "0" ]; then
-        which sudo > /dev/null
+        command -v sudo > /dev/null 2>&1
         if [ "$?" -eq "0" ]; then
           LAZY_SUDO="sudo "
         else
           echo "Warning: Cannot find sudo; Invoking nsenter as the user $USER." >&2
         fi
     fi
-    
+
     # Get environment variables from the container's root process
 
     ENV=$($LAZY_SUDO cat /proc/$PID/environ | xargs -0 | grep =)
