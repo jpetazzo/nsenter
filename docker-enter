@@ -7,6 +7,13 @@ else
     NSENTER=nsenter
 fi
 
+if [ -e $(dirname "$0")/importenv ]; then
+    # with boot2docker, importenv is not in the PATH but it is in the same folder
+    IMPORTENV=$(dirname "$0")/importenv
+else
+    IMPORTENV=importenv
+fi
+
 if [ -z "$1" ]; then
     echo "Usage: `basename "$0"` CONTAINER [COMMAND [ARG]...]"
     echo ""
@@ -25,7 +32,7 @@ else
           echo "Warning: Cannot find sudo; Invoking nsenter as the user $USER." >&2
         fi
     fi
-    
+
     ENVIRON="/proc/$PID/environ"
 
     # Prepare nsenter flags
@@ -34,10 +41,10 @@ else
     # env is to clear all host environment variables and set then anew
     if [ $# -lt 1 ]; then
         # No arguments, default to `su` which executes the default login shell
-        $LAZY_SUDO importenv "$ENVIRON" "$NSENTER" $OPTS su -m root
+        $LAZY_SUDO "$IMPORTENV" "$ENVIRON" "$NSENTER" $OPTS su -m root
     else
         # Has command
         # "$@" is magic in bash, and needs to be in the invocation
-        $LAZY_SUDO importenv "$ENVIRON" "$NSENTER" $OPTS "$@"
+        $LAZY_SUDO "$IMPORTENV" "$ENVIRON" "$NSENTER" $OPTS "$@"
     fi
 fi
