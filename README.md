@@ -74,9 +74,9 @@ shell will be invoked instead.
     # list the root filesystem
     docker-enter my_awesome_container ls -la
 
-## docker toolbox usage for mac or windows user
+## Docker toolbox usage for mac or windows user
 
-### ssh to docker machine
+### ssh to toolbox's docker machine
 
     docker-machine ssh default
 
@@ -93,7 +93,7 @@ shell will be invoked instead.
     sudo nsenter --target $PID --mount --uts --ipc --net --pid
     # You can run linux command in this container now, check log, process, etc. After that, don't forget to exist.
 
-### usage of docker-enter
+### Usage of docker-enter
 
     docker-enter 08a2a025e05f ls /var/log
 
