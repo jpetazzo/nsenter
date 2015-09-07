@@ -84,6 +84,10 @@ shell will be invoked instead.
 
     docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 
+You can also install `nsenter` to other folder, then you need run `nsenter` with full path.
+
+    docker run --rm -v /tmp:/target jpetazzo/nsenter
+    
 ### Usage of nsenter
 
     # List the running container only, for example, the containter id is 08a2a025e05f
