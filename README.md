@@ -74,6 +74,29 @@ shell will be invoked instead.
     # list the root filesystem
     docker-enter my_awesome_container ls -la
 
+## docker toolbox usage for mac or windows user
+
+### ssh to docker machine
+
+    docker-machine ssh default
+
+### Install nsenter, docker-enter, importenv into toolbox's vm
+
+    docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
+
+### Usage of nsenter
+
+    # List the running container only, for example, the containter id is 08a2a025e05f
+    docker ps
+    PID=$(docker inspect --format {{.State.Pid}} 08a2a025e05f)
+    # Enter the container
+    sudo nsenter --target $PID --mount --uts --ipc --net --pid
+    # You can run linux command in this container now, check log, process, etc. After that, don't forget to exist.
+
+### usage of docker-enter
+
+    docker-enter 08a2a025e05f ls /var/log
+
 ## docker-enter with boot2docker
 
 If you are using boot2docker, you can use the function below, to:
