@@ -74,28 +74,42 @@ shell will be invoked instead.
     # list the root filesystem
     docker-enter my_awesome_container ls -la
 
-## Docker toolbox usage for mac or windows user
+## Docker toolbox usage for OS X or Windows user
 
-### ssh to toolbox's docker machine
+
+### SSH to the Docker Toolbox virtual machine
 
     docker-machine ssh default
 
-### Install nsenter, docker-enter, importenv into toolbox's vm
+
+### Install nsenter, docker-enter, and importenv into the VM
 
     docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 
-You can also install `nsenter` to other folder, then you need run `nsenter` with full path.
+You can also install `nsenter` to another folder. In that case, you will
+need to specify the full path of `nsenter` to run it.
 
     docker run --rm -v /tmp:/target jpetazzo/nsenter
-    
+
+
 ### Usage of nsenter
 
-    # List the running container only, for example, the containter id is 08a2a025e05f
+List running containers:
+
     docker ps
+
+Identify the ID of the container that you want to get into; and retrieve
+its associated PID:
+
     PID=$(docker inspect --format {{.State.Pid}} 08a2a025e05f)
-    # Enter the container
+
+Enter the container:
+
     sudo nsenter --target $PID --mount --uts --ipc --net --pid
-    # You can run linux command in this container now, check log, process, etc. After that, don't forget to exist.
+
+Remember to run those commands in the Docker Toolbox virtual machine; not
+in your host environment.
+
 
 ### Usage of docker-enter
 
