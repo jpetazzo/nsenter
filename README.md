@@ -113,7 +113,12 @@ in your host environment.
 
 ### Usage of docker-enter
 
+    # Enter docker container
+    docker-enter 08a2a025e05f
+
+    # Or run command directly
     docker-enter 08a2a025e05f ls /var/log
+    docker-enter 08a2a025e05f df -h
 
 ## docker-enter with boot2docker
 
