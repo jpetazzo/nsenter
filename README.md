@@ -74,6 +74,7 @@ shell will be invoked instead.
     # list the root filesystem
     docker-enter my_awesome_container ls -la
 
+
 ## Docker toolbox usage for OS X or Windows user
 
 
@@ -92,7 +93,7 @@ need to specify the full path of `nsenter` to run it.
     docker run --rm -v /tmp:/target jpetazzo/nsenter
 
 
-### Usage of nsenter
+### Using nsenter
 
 List running containers:
 
@@ -111,14 +112,19 @@ Remember to run those commands in the Docker Toolbox virtual machine; not
 in your host environment.
 
 
-### Usage of docker-enter
+### Using docker-enter
 
-    # Enter docker container
+With `docker-enter`, you don't need to lookup the container PID.
+
+You can get a shell inside the container:
+
     docker-enter 08a2a025e05f
 
-    # Or run command directly
+Or run commands directly:
+
     docker-enter 08a2a025e05f ls /var/log
     docker-enter 08a2a025e05f df -h
+
 
 ## docker-enter with boot2docker
 
@@ -136,6 +142,7 @@ docker-enter() {
 ```
 
 You can use it directly from your host (OS X/Windows), no need to ssh into boot2docker.
+
 
 ## Caveats
 
