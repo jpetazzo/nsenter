@@ -19,32 +19,33 @@ if [ -z "$1" ]; then
     echo ""
     echo "Enters the Docker CONTAINER and executes the specified COMMAND."
     echo "If COMMAND is not specified, runs an interactive shell in CONTAINER."
-else
-    PID=$(docker inspect --format "{{.State.Pid}}" "$1")
-    [ -z "$PID" ] && exit 1
-    shift
+    exit
+fi
 
-    if [ "$(id -u)" -ne "0" ]; then
-        which sudo > /dev/null
-        if [ "$?" -eq "0" ]; then
-          LAZY_SUDO="sudo "
-        else
-          echo "Warning: Cannot find sudo; Invoking nsenter as the user $USER." >&2
-        fi
-    fi
+PID=$(docker inspect --format "{{.State.Pid}}" "$1")
+[ -z "$PID" ] && exit 1
+shift
 
-    ENVIRON="/proc/$PID/environ"
-
-    # Prepare nsenter flags
-    OPTS="--target $PID --mount --uts --ipc --net --pid --"
-
-    # env is to clear all host environment variables and set then anew
-    if [ $# -lt 1 ]; then
-        # No arguments, default to `su` which executes the default login shell
-        $LAZY_SUDO "$IMPORTENV" "$ENVIRON" "$NSENTER" $OPTS su -m root
+if [ "$(id -u)" -ne "0" ]; then
+    which sudo > /dev/null
+    if [ "$?" -eq "0" ]; then
+      LAZY_SUDO="sudo "
     else
-        # Has command
-        # "$@" is magic in bash, and needs to be in the invocation
-        $LAZY_SUDO "$IMPORTENV" "$ENVIRON" "$NSENTER" $OPTS "$@"
+      echo "Warning: Cannot find sudo; Invoking nsenter as the user $USER." >&2
     fi
+fi
+
+ENVIRON="/proc/$PID/environ"
+
+# Prepare nsenter flags
+OPTS="--target $PID --mount --uts --ipc --net --pid --"
+
+# env is to clear all host environment variables and set then anew
+if [ $# -lt 1 ]; then
+    # No arguments, default to `su` which executes the default login shell
+    $LAZY_SUDO "$IMPORTENV" "$ENVIRON" "$NSENTER" $OPTS su -m root
+else
+    # Has command
+    # "$@" is magic in bash, and needs to be in the invocation
+    $LAZY_SUDO "$IMPORTENV" "$ENVIRON" "$NSENTER" $OPTS "$@"
 fi
