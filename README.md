@@ -154,7 +154,7 @@ You can use it directly from your host (OS X/Windows), no need to ssh into boot2
   container (yet).
 
 
-[container namespaces]: http://blog.dotcloud.com/under-the-hood-linux-kernels-on-dotcloud-part
+[container namespaces]: https://gun.io/blog/PaaS-under-the-hood-episode-1-kernel-namespaces/
 [enter into a Docker container]: http://jpetazzo.github.io/2014/03/23/lxc-attach-nsinit-nsenter-docker-0-9/
 [Debugging a Docker container]: http://blog.loof.fr/2014/06/debugging-docker-container.html
 [Nicolas De Loof]: https://twitter.com/ndeloof
