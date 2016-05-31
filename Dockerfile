@@ -1,5 +1,5 @@
 FROM debian:jessie
-ENV VERSION 2.26
+ENV VERSION 2.28
 RUN apt-get update -q
 RUN apt-get install -qy curl build-essential
 RUN mkdir /src
