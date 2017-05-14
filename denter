@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [ -e $(dirname "$0")/nsenter ]; then
+    # with boot2docker, nsenter is not in the PATH but it is in the same folder
+    NSENTER=$(dirname "$0")/nsenter
+else
+    NSENTER=nsenter
+fi
+
+if [ -z "$1" ]; then
+    echo "Usage: `basename "$0"` CONTAINER"
+    echo ""
+    echo "Enters the Docker CONTAINER"
+    exit
+else
+    PID=$(docker inspect --format "{{.State.Pid}}" "$1")
+    [ -z "$PID" ] && exit 1
+    $NSENTER --target $PID --mount --uts --ipc --net --pid
+fi

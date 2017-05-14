@@ -6,6 +6,8 @@ if mountpoint -q /target; then
 	cp /docker-enter /target
 	echo "Installing importenv to /target"
 	cp /importenv /target
+        echo "Installing denter to /target"
+        cp /denter /target
 else
 	echo "/target is not a mountpoint."
 	echo "You can either:"
