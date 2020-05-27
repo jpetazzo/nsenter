@@ -6,7 +6,10 @@ Starting from Docker 1.3 you can use [Docker exec](https://docs.docker.com/refer
 
 There are differences between nsenter and docker exec; namely, nsenter doesn't enter the cgroups, and therefore evades resource limitations. The potential benefit of this would be debugging and external audit, but  for remote access, **docker exec is the current recommended approach**.
 
-# nsenter in a can
+**Important notice:** this repository was useful in the early days of Docker, because `nsenter` was missing from major distributions back then. `nsenter` was written in early 2013, and included in `util-linux` release 2.23. If we look at Ubuntu LTS releases, `trusty` (14.04) shipped `util-linux` 2.20, and `xenial` (16.04) shipped 2.27. In other words, if you were using Ubuntu LTS, you had to wait until 2016 to get `nsenter` through the main, official packages. That being said, all modern distros now ship with `nsenter`, and this repository is no longer useful, except for historical or curiosity purposes. **It is no longer maintained.**
+
+
+## nsenter in a can
 
 This is a small Docker recipe to build `nsenter` easily and install it in your
 system.
@@ -146,15 +149,13 @@ You can use it directly from your host (OS X/Windows), no need to ssh into boot2
 
 ## Caveats
 
-- This only works on Intel 64 bits platforms. Arguably, this is the
-  only officially supported platform for Docker; so it's not a big deal.
-  As soon as the Docker registry supports other architectures, I will
-  see how to build `nsenter` for those!
+- This only works on Intel 64 bits platforms. It should be relatively
+  easy to adapt to other architectures, though.
 - `nsenter` still needs to run from the host; it cannot run inside a
   container (yet).
 
 
-[container namespaces]: https://gun.io/blog/PaaS-under-the-hood-episode-1-kernel-namespaces/
+[container namespaces]: https://www.youtube.com/watch?v=sK5i-N34im8
 [enter into a Docker container]: http://jpetazzo.github.io/2014/03/23/lxc-attach-nsinit-nsenter-docker-0-9/
 [Debugging a Docker container]: http://blog.loof.fr/2014/06/debugging-docker-container.html
 [Nicolas De Loof]: https://twitter.com/ndeloof
